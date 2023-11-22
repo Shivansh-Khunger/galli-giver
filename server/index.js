@@ -4,6 +4,13 @@ const PORT = process.env.PORT || 3001;
 
 const app = express();
 
+const galliArray = [
+  " ki maa ki chut",
+  " ki maa ka bhosda",
+  " ki maa ki chut me danda",
+  " ki attendace chud jaye",
+];
+
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
@@ -13,8 +20,14 @@ app.use(function (req, res, next) {
   next();
 });
 
+app.get("/", (req, res) => {
+  res.send("Welcome to the backend server of galli giver");
+});
+
 app.get("/galli", (req, res) => {
-  let jsonString = `{"modifiedName":"${req.query.name} ki maa ki chut"}`;
+  let jsonString = `{"modifiedName":"${
+    req.query.name + galliArray[Math.floor(Math.random() * galliArray.length)]
+  }"}`;
   let json = JSON.parse(jsonString);
   console.log(json);
   res.json(json);
@@ -25,5 +38,7 @@ app.get("/api", (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Listening on http://localhost:${PORT}`);
+  console.log(
+    `Server Running on ${PORT}, Listening on http://localhost:${PORT}`
+  );
 });
